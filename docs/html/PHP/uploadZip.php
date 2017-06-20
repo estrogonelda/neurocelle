@@ -6,23 +6,23 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
-
+    <link rel="icon" href="../img/favicon.ico">
+	
     <title>Cover Template for Bootstrap</title>
-
+	
     <!-- Bootstrap core CSS -->
-    <link href="./dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="./assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
+    <link href="../bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	
     <!-- Custom styles for this template -->
-    <link href="cover.css" rel="stylesheet">
-
+    <link href="../css/cover.css" rel="stylesheet">
+	
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="./assets/js/ie-emulation-modes-warning.js"></script>
-
+    <script src="../bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+	
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -31,7 +31,7 @@
   </head>
 
   <body>
-
+	
     <div class="site-wrapper">
 
       <div class="site-wrapper-inner">
@@ -46,55 +46,57 @@
                   <li class="active"><a href="index.html">Home</a></li>
                   <li><a href="#">Downloads</a></li>
                   <li><a href="#">Tutorial</a></li>
-		  <li><a href="#">About</a></li>
+				  <li><a href="#">About</a></li>
                 </ul>
               </nav>
             </div>
-          </div>
+        </div>
 			
           <div class="inner cover">
             <h1 class="cover-heading">Neurocelle</h1>
-            <p class="lead">A machine learning environment!</p>
+            <p class="lead">A Machine Learning Environment!</p>
 		
-		<form action=uploadZip.php method="post" enctype="multipart/form-data">
+			<form action=uploadZip.php method="post" enctype="multipart/form-data">
    			<label class="btn btn-default btn-file">
 	        		<input type="file" name="fileToUpload" id="fileToUpload">
 			</label>
 			<input type="submit" value="Upload File" name="submit">
-		</form>
+			</form>
 		
 		<?php
-			$location = "uploads/";
+			$location = "../../uploads/";
 			$name = $_FILES["fileToUpload"]["name"];
 			$tmp_name = $_FILES["fileToUpload"]["tmp_name"];
 			$size = $_FILES["fileToUpload"]["size"];
 			$type = $_FILES["fileToUpload"]["type"];
-			$ext = strtolower(substr($name,strpos($name,".")+1));
+			$pos = strpos(substr($name,-4),'.') + 1;
+			$ext = strtolower(substr(substr($name,-4),$pos));
 			
 			//echo $ext;
 			
 			
 			// Testing ...	
 			if(isset($name)){
-				if(!empty($name) && ($ext == "zip" || $ext == "tar.gz")){// && $type == "application/zip"){
+				if(!empty($name) && ($ext == "zip" || $ext == "tar" || $ext == "gz" || $ext == "tgz")){// && $type == "application/zip"){
 					// Can upload only .zip files until 10M.
 					if(move_uploaded_file($tmp_name,$location.$name)){
 						echo "<p>Your file was successfully uploaded!</p>";
+						echo "<p>A report with your model binary file will be sent to your email.</p>";
 						
-						$oname = substr($name,0,strpos($name,"."));
+						//$oname = substr($name,0,strpos($name,"."));
 						
-						passthru('mkdir actions/'. $oname, $returnval);
-						passthru('cp ' . $location.$name . ' actions/' . $oname, $returnval);
+						//passthru('mkdir ../../udata/'. $oname, $returnval);
+						//passthru('cp ' . $location.$name . ' actions/' . $oname, $returnval);
 						//passthru('cp ' . $location.$name . ' /home/leonel);
 						//passthru('chmod 777 actions/' . $oname . '/' . $name, $returnval);
-						passthru('chmod 777 -R actions/', $returnval);
+						//passthru('chmod 777 -R actions/', $returnval);
 						
 						// Command 'cd' doesn't works.
-						if($ext == 'zip'){
-							passthru('unzip actions/' . $oname . '/' . $name . ' -d actions/' . $oname, $returnval);
-						} else {
-							passthru('tar -zxvf actions/' . $oname . '/' . $name . ' -C actions/' . $oname, $returnval);
-						}
+						//if($ext == 'zip'){
+						//	passthru('unzip actions/' . $oname . '/' . $name . ' -d actions/' . $oname, $returnval);
+						//} else {
+						//	passthru('tar -zxvf actions/' . $oname . '/' . $name . ' -C actions/' . $oname, $returnval);
+						//}
 						
 						// Matlab RUN!!
 						//passthru('matlab -nojvm -r \'cd actions/' . $oname . '; '. $oname .'\'', $returnval);
@@ -102,20 +104,20 @@
 						//passthru('pwd', $returnval);
 						//echo $returnval;
 						
-						passthru('./ncl;', $returnval);
-						passthru('echo "Msg atoumatica neurocelle" | mutt -s "Tretas" -c estrogonelda@hotmail.com estrogonelda@gmail.com -a actions/' . $oname . '/' . $name, $returnval);
-						echo "<hr/>".$returnval;
+						//passthru('./ncl;', $returnval);
+						//passthru('echo "Msg atoumatica neurocelle" | mutt -s "Tretas" -c estrogonelda@hotmail.com estrogonelda@gmail.com -a actions/' . $oname . '/' . $name, $returnval);
+						//echo "<hr/>".$returnval;
 					}else{
 						echo "Error while uploading file!" . "<br>";
 					}
 				}else{
-					echo "<p> Please, choose a .zip file. </p>";
+					echo "<p> Please, choose a .zip, .tar, gz or .tgz file. </p>";
 				}
 			}else{
-				echo "<br> File unset.";
+				echo "<br> File unset. It mustn't exceed 8 Mb!";
 			}
 		?>
-          </div>
+        </div>
 
           <div class="mastfoot">
             <div class="inner">
@@ -126,7 +128,7 @@
         </div>
 
       </div>
-
+	
     </div>
 
     <!-- Bootstrap core JavaScript
