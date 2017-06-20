@@ -1,0 +1,23 @@
+function output = getObjStr(varargin)
+
+% GETOBJ Summary of this function goes here
+%   Detailed explanation goes here
+
+
+    % Create 'object' structure.
+    output = struct(...
+        'type',[],...
+        'sub_type',[],...
+        'application',[],...
+        'topology',[],...
+        'params',[],...
+        'records',[],...
+        'id',[]);
+    
+    if nargin == 0
+        return;
+    else
+        % Error output: empty array.
+        output = [];
+    end
+end

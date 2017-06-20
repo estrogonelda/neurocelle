@@ -1,0 +1,35 @@
+# Mustn't track:
+
+# No .a or .o or .p files
+*.[aop]
+
+# No ~ files
+*~
+
+# No .mat files except what is in in save folder.
+*.mat
+#!save/
+
+# No .csv, .aux, .log, .toc, .bbl, .blg, or .exe files
+*.csv
+*.aux
+*.log
+*.toc
+*.bbl
+*.blg
+*.exe
+
+# No .ncl, .vso, .ato, .vro, .prl and .sng files
+*.ncl
+*.vso
+*.ato
+*.vro
+*.prl
+*.sng
+
+# Ignore the 'old', 'html' and the 'null' folder.
+old/
+html/
+null/
+tmp/
+
