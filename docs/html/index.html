@@ -2,9 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="./img/favicon.ico">
@@ -14,21 +12,8 @@
     <!-- Bootstrap core CSS -->
     <link href="./bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="./bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="./css/cover.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="./bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
@@ -41,34 +26,39 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-				<!-- <img src="SA02.jpg" /> -->
-              <h3 class="masthead-brand">MaAp Laboratory</h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                	<li class="active"><a href="index.html">Home</a></li>
-                	<li><a href="#">Downloads</a></li>
-                	<li><a href="#">Tutorial</a></li>
-		  			<li><a href="#">About</a></li>
-                </ul>
+              <h3 class="masthead-brand">MaAp Laboratories</h3>
+              <nav class="nav nav-masthead">
+                <a class="nav-link active" href="#">Home</a>
+                <a class="nav-link" href="features.html">Features</a>
+                <a class="nav-link" href="tutorial.html">Tutorial</a>
+                <a class="nav-link" href="https://github.com/estrogonelda/neurocelle/archive/master.zip">Downloads</a>
               </nav>
             </div>
           </div>
-
-          <div class="inner cover">
-            <h1 class="cover-heading">Neurocelle</h1>
-            <p class="lead">A Machine Learning Environment!</p>
 		
-			<form action=./PHP/uploadZip.php method="post" enctype="multipart/form-data">
-   			<label class="btn btn-default btn-file">
-	        		<input type="file" name="fileToUpload" id="fileToUpload">
-			</label>
-			<input type="submit" value="Upload File" name="submit">
-			</form>
-          </div>
+		  <div class="inner cover">
+			<h1 class="cover-heading">Neurocelle</h1>
+ 			<p class="lead">A Machine Learning Environment!</p>
+			<hr>
+			<br>
+			<br>
+			
+ 			<form action=./PHP/uploadZip3.php method="post" enctype="multipart/form-data">
+				<p>Upload your project file.<br>
+				Or learn about upload possibilities at the <a href="tutorial.html">Tutorial</a> page.</p>
+				<br>
+
+		 		<label class="btn btn-default btn-file">
+		 			<input type="file" name="fileToUpload" id="fileToUpload">
+ 				</label>
+ 				<input type="submit" value="Upload File" name="submit">
+ 			</form>
+		  </div>
 
           <div class="mastfoot">
             <div class="inner">
-              <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="tplt.zip">@mdo</a>.</p>
+              <p>See the <a href="https://github.com/estrogonelda/neurocelle">neurocelle</a>
+			  repository at GitHub, or contact us at <a href="https://github.com/estrogonelda">estrogonelda@gmail.com</a>.</p>
             </div>
           </div>
 
@@ -81,8 +71,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="./bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="./bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="./bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
