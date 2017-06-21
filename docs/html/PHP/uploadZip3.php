@@ -31,7 +31,7 @@
                 <a class="nav-link active" href="../index.html">Home</a>
                 <a class="nav-link" href="../features.html">Features</a>
                 <a class="nav-link" href="https://github.com/estrogonelda/neurocelle/archive/master.zip">Downloads</a>
-                <a class="nav-link" href="documentation.html">Documentation</a>
+                <a class="nav-link" href="../documentation.html">Docs</a>
               </nav>
             </div>
           </div>
@@ -55,7 +55,7 @@
 			-->
  			<form action=./uploadZip3.php method="post" enctype="multipart/form-data">
 				<p>Upload your project file.<br>
-				Or learn about upload possibilities at the <a href="../tutorial.html">Tutorial</a> page.</p>
+				Or learn about upload possibilities in our <a href="documentation.html">documentation</a>.</p>
 				<br>
 
 		 		<label class="btn btn-default btn-file">
