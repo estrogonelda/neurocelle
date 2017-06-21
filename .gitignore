@@ -29,7 +29,6 @@
 
 # Ignore the 'old', 'html' and the 'null' folder.
 old/
-html/
 null/
 tmp/
 
