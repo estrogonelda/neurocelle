@@ -29,9 +29,9 @@
               <h3 class="masthead-brand">MaAp Laboratories</h3>
               <nav class="nav nav-masthead">
                 <a class="nav-link active" href="../index.html">Home</a>
-                <a class="nav-link" href="../features.html">Features</a>
-                <a class="nav-link" href="https://github.com/estrogonelda/neurocelle/archive/master.zip">Downloads</a>
-                <a class="nav-link" href="../documentation.html">Docs</a>
+                <a class="nav-link" href="../downloads.html">Downloads</a>
+                <a class="nav-link" href="../docs.html">Docs</a>
+                <a class="nav-link" href="../about.html">About</a>
               </nav>
             </div>
           </div>
@@ -54,8 +54,8 @@
 			</form>
 			-->
  			<form action=./uploadZip3.php method="post" enctype="multipart/form-data">
-				<p>Upload your project file.<br>
-				Or learn about upload possibilities in our <a href="documentation.html">documentation</a>.</p>
+				<p>You can upload more files.<br>
+				Or learn about other tricks in our <a href="../docs.html">documentation</a>.</p>
 				<br>
 
 		 		<label class="btn btn-default btn-file">
@@ -111,7 +111,7 @@
 							echo "Error while uploading file!" . "<br>";
 						}
 					}else{
-						echo "<p> Please, choose a .zip, .tar, gz or .tgz file. </p>";
+						echo "<p>Unsupported file extension. Please, choose a .zip, .tar, .gz or .tgz file. </p>";
 					}
 				}else{
 					echo "<br> File unset. It mustn't exceed 2 Mb!";
