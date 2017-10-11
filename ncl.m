@@ -79,14 +79,14 @@ function varargout = ncl(varargin)
     % Program's subtitle
     SUBTITLE = 'A Machine Learning Approach!';
     
-    % Default root directory: an absolute path.
-    RDIR = fullfile('/home/leonel/Dropbox/Scientific Initiation/Matlab Ultimate - Leonel/Matlab Laboratory/',PNAME);
+    % Default root directory: Must be an absolute path.
+    RDIR = fullfile('/home/leonel/Dropbox/Scientific/Programing/Matlab Ultimate - Leonel/Matlab Laboratory/',PNAME);
     
-    % Configuration file ('neurocelle.conf') and default file ('default.conf')
+    % Configuration file ('neurocelle.conf') and Defaults file ('defaults.conf')
     % paths.
     % The configuration file is essencial for the program to run.
     CFG = fullfile(RDIR,'cfg',[PNAME '.conf']);
-    %DFT = fullfile(RDIR,'cfg','default.conf');
+    %DFT = fullfile(RDIR,'cfg','defaults.conf');
     
     % Adjusting path to libraries.
     addpath(fullfile(RDIR,'bin'));
