@@ -1,0 +1,89 @@
+# ponga: three containers (db, backend, frontend) + an optional e2e test runner.
+#
+#   cp .env.example .env            # then change the passwords
+#   docker compose up -d --build
+#   docker compose exec backend python -m scripts.populate_db
+#   docker compose --profile e2e run --rm e2e
+name: ponga
+
+x-db-urls: &db-urls
+  DATABASE_URL: postgresql+psycopg://ponga_app:${PONGA_APP_PASSWORD:-ponga_app_pw}@db:5432/${PONGA_DB:-ponga}
+  MIGRATION_DATABASE_URL: postgresql+psycopg://ponga_owner:${PONGA_OWNER_PASSWORD:-ponga_owner_pw}@db:5432/${PONGA_DB:-ponga}
+  READONLY_DATABASE_URL: postgresql+psycopg://ponga_readonly:${PONGA_READONLY_PASSWORD:-ponga_readonly_pw}@db:5432/${PONGA_DB:-ponga}
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_pw}
+      PONGA_DB: ${PONGA_DB:-ponga}
+      PONGA_OWNER_PASSWORD: ${PONGA_OWNER_PASSWORD:-ponga_owner_pw}
+      PONGA_APP_PASSWORD: ${PONGA_APP_PASSWORD:-ponga_app_pw}
+      PONGA_READONLY_PASSWORD: ${PONGA_READONLY_PASSWORD:-ponga_readonly_pw}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
+    healthcheck:
+      # TCP check: the temporary server used while init scripts run listens on
+      # the unix socket only, so this turns healthy only once init finished.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres -d $${PONGA_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    networks: [data]
+
+  backend:
+    build: ./backend
+    image: ${IMAGE_PREFIX:-ponga}-backend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      <<: *db-urls
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8000}:8000"
+    networks: [data, web]
+
+  frontend:
+    build: ./frontend
+    image: ${IMAGE_PREFIX:-ponga}-frontend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: http://backend:8000
+      FRONTEND_SECRET_KEY: ${FRONTEND_SECRET_KEY:-change-me-too}
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${FRONTEND_PORT:-8080}:5000"
+    networks: [web]
+
+  e2e:
+    profiles: [e2e]
+    build: ./e2e
+    environment:
+      BASE_URL: http://frontend:5000
+      API_URL: http://backend:8000
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+    depends_on:
+      frontend:
+        condition: service_healthy
+    volumes:
+      - ./e2e/artifacts:/e2e/artifacts
+    networks: [web]
+
+volumes:
+  db-data:
+
+networks:
+  data:   # db <-> backend only; the frontend cannot reach PostgreSQL
+  web:    # backend <-> frontend (<-> e2e)

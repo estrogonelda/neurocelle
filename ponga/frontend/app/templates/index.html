@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block content %}
+<h1>Leaderboard</h1>
+{% if leaderboard %}
+<table data-testid="leaderboard">
+  <thead><tr><th class="num">#</th><th>Player</th><th class="num">Rating</th><th class="num">W</th><th class="num">L</th><th class="num">Win %</th></tr></thead>
+  <tbody>
+  {% for row in leaderboard %}
+    <tr>
+      <td class="num">{{ row.rank }}</td>
+      <td><a href="{{ url_for('player_detail', player_id=row.id) }}">{{ row.name }}</a></td>
+      <td class="num rating">{{ row.rating }}</td>
+      <td class="num">{{ row.wins }}</td>
+      <td class="num">{{ row.losses }}</td>
+      <td class="num">{{ '%.0f' % (row.win_rate * 100) }}%</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="empty">No players yet. <a href="{{ url_for('players') }}">Add some players</a> to start.</p>
+{% endif %}
+<h2>Recent matches</h2>
+{% include "_matches_table.html" %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Players{% endblock %}
+{% block content %}
+<h1>Players</h1>
+{% if g.user %}
+<form method="post" action="{{ url_for('add_player') }}" class="card row">
+  <label>New player <input name="name" maxlength="80" placeholder="Name" required></label>
+  <button type="submit">Add player</button>
+</form>
+{% endif %}
+{% if players %}
+<table data-testid="players-table">
+  <thead><tr><th>Name</th><th class="num">Rating</th><th class="num">W</th><th class="num">L</th>{% if g.user and g.user.is_admin %}<th></th>{% endif %}</tr></thead>
+  <tbody>
+  {% for p in players %}
+    <tr>
+      <td><a href="{{ url_for('player_detail', player_id=p.id) }}">{{ p.name }}</a></td>
+      <td class="num">{{ p.rating }}</td><td class="num">{{ p.wins }}</td><td class="num">{{ p.losses }}</td>
+      {% if g.user and g.user.is_admin %}
+      <td><form method="post" action="{{ url_for('delete_player', player_id=p.id) }}" class="inline">
+        <button type="submit" class="danger small" aria-label="Delete {{ p.name }}">Delete</button></form></td>
+      {% endif %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="empty">No players yet.</p>
+{% endif %}
+{% endblock %}

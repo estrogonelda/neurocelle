@@ -1,0 +1,18 @@
+{% if matches %}
+<table class="matches" data-testid="matches-table">
+  <thead><tr><th>When</th><th>Player 1</th><th class="num">Score</th><th>Player 2</th><th class="num">Δ Elo</th></tr></thead>
+  <tbody>
+  {% for m in matches %}
+    <tr>
+      <td>{{ m.played_at[:16].replace('T', ' ') }}</td>
+      <td class="{{ 'winner' if m.winner.id == m.player1.id }}">{{ m.player1.name }}</td>
+      <td class="num">{{ m.score1 }} – {{ m.score2 }}</td>
+      <td class="{{ 'winner' if m.winner.id == m.player2.id }}">{{ m.player2.name }}</td>
+      <td class="num">±{{ m.rating_change }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="empty">No matches recorded yet.</p>
+{% endif %}

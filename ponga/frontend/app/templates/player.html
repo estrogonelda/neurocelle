@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ player.name }}{% endblock %}
+{% block content %}
+<h1>{{ player.name }}</h1>
+<div class="stats">
+  <div><span>Rating</span><strong data-testid="player-rating">{{ player.rating }}</strong></div>
+  <div><span>Wins</span><strong>{{ player.wins }}</strong></div>
+  <div><span>Losses</span><strong>{{ player.losses }}</strong></div>
+</div>
+<h2>Matches</h2>
+{% include "_matches_table.html" %}
+{% endblock %}
